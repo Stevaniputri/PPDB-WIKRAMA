@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    justify-content: center;
+    align-items: center;
+    height: auto;
+}
+
+.container {
+    background-color: #fff;
+    display: flex;
+    border-radius: 25px;
+    margin-left: 15%;
+    margin-top: 4%;
+    box-shadow: 0 10px 15px grey;
+}
+
+.login {
+    background-color: #fff;
+    margin-left: 10%;
+    align-items: center;
+}
+
+form {
+    width: 340px;
+    margin: 80px auto;
+    background: #fff;
+}
+
+h1 {
+    margin: 20px;
+    text-align: center;
+    font-weight: bolder;
+    text-transform: uppercase;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800px;
+}
+
+hr {
+    border-top: 2px solid #2e4850;
+}
+
+a {
+    color: black;
+}
+
+.right {
+    display: block;
+    justify-content: center;
+    /* background-color: #ffa12c; */
+}
+
+.right img {
+    width: 90%;
+    margin: 110px 30px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+form label {
+    display: block;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 5px;
+}
+
+input {
+    width: 95%;
+    border: none;
+    outline: none;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid gray;
+}
+
+button {
+    border: none;
+    outline: none;
+    padding: 8px;
+    width: 100%;
+    color: #fff;
+    font-size: 16px;
+    margin-top: 20px;
+    border-radius: 10px;
+    background: #111;
+}
+
+button:hover {
+    color: #111;
+    background: #9CFF2E;
+    border: 2px solid #111;
+}
+
+
+
+@media (max-width: 880px) {
+    .container {
+        width: 100%;
+        max-width: 750px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    form {
+        width: 300px;
+        margin: 20px auto;
+    }
+
+    .login {
+        width: 800px;
+        padding: 20px;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .right img {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+@media screen and (max-width: 1050px){
+	.container{
+		grid-gap: 5rem;
+	}
+}
+
+@media screen and (max-width: 1000px){
+	form{
+		width: 290px;
+	}
+
+	.login-content h2{
+        font-size: 2.4rem;
+        margin: 8px 0;
+	}
+
+	.right img{
+		width: 400px;
+        display: none;
+	}
+}
