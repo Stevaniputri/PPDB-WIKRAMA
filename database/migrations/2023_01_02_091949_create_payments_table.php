@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id()->nullable();
-            $table->string('user_id');
+            $table->string('ppdbs_id');
             $table->string('pemilik');
             $table->string('rekening');
             $table->string('nominal');
             $table->string('bukti')->nullable();
-            $table->string('status');
+            $table->enum('status', ['pending', 'success', 'failed']);
             $table->timestamps();
         });
     }

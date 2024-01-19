@@ -27,11 +27,12 @@
             </thead>
 
             <tbody>
-              @foreach($data as $item)
+                <?php $i = 1; ?>
+              @foreach($datapendaftaran as $item)
               <tr>
+                <td>{{ $i++ }}</td>
                 <td>{{ $item->id }}</td>
-                <td>{{ $item->user_id }}</td>
-                <td>{{ $item->pemilik }}</td>
+                <td>{{ $item->name }}</td>
                 <td>
                     <div class="lihat">
                         <a href="/proof/{{$item ['id']}}" style="color: blue;">Lihat</a>
@@ -43,32 +44,39 @@
                     </div>
                 </td>
                 <td style="display: flex; gap: 10px;">
-                    <form action="" method="POST">
+                    @if ($item->payment == null)
+                    Belum melakukan pembayaran
+                    @elseif($item->payment->status == 'pending')
+                    <form action="/success/{{$item['id']}}" method="POST">
                         @csrf
-                        @method('')
+                        @method('PATCH')
                         <button type="submit" style="background-color: orange; border: none; padding: 5px 5px 5px 5px; border-radius: 5px;">Verifikasi</button>
                     </form>
-                    <form action="">
-                        @method('')
+                    <form action="/failed/{{$item['id']}}" method="POST">
+                        @csrf
+                        @method('PATCH')
                     <button type= "submit" style="background-color: red; border: none; padding: 5px 7px 5px 5px; border-radius: 5px;">Tolak</button>
-                </td>
-              </tr>
-
             </form>
+            @elseif ($item->payment->status == 'success')
+            success
+            @elseif ($item->payment->status == 'failed')
+            failed
+            @endif
+            </td>
+        </tr>
+
+
               @endforeach
             </tbody>
         </table>
     </div>
-
-
-
 
     @else
 
 {{----------------------- HALAMAN PAYMENT USER ----------------------------}}
 
 
-@if(!isset($datasiswa))
+@if($datasiswa == null)
 </center>
 <div class="before-tf"></div>
 <p class="text-proof">Silahkan upload bukti bayar Anda di form berikut</p>
@@ -113,26 +121,29 @@
     </div>
   </form>
 </div>
-@elseif($datasiswa->status == 0)
+@elseif($datasiswa->status == 'pending')
 <div class="wait">
     <img src="assets/images/wait.svg" style="width: 300px;">
     <br>
     <span style="font-size: 20px">Pembayaran sedang diverifikasi, harap tunggu informasi selanjutnya!</span>
 </div>
-@elseif($datasiswa->status == 1)
+
+@elseif($datasiswa->status == 'success')
 <div class="acc">
     <img src="assets/images/accept.svg" style="width: 300px;">
     <br>
     <span style="font-size: 20px">Pembayaran telah diverifikasi, silahkan melanjutkan ke proses berikutnya!</span>
 </div>
-@else
+
+@elseif($datasiswa->status == 'failed')
 <div class="cancel">
     <span style="font-size: 20px">Pembayaran ditolak, silahkan lakukan ulang!</span>
     <br>
-    <div class="form-payment">
+<div class="form-payment">
 
-<form method="POST" action="{{route('uploadPembayaran')}}" enctype="multipart/form-data">
+<form method="POST" action="{{route('update')}}" enctype="multipart/form-data">
     @csrf
+    @method("PATCH")
     <div class="user-details">
         <div class="input-box">
             <span class="details">Nama Pemilik Rekening</span>

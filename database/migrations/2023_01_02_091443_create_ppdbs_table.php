@@ -18,11 +18,9 @@ return new class extends Migration
             $table->string('nisn')->unique();
             $table->string('name');
             $table->string('school');
-            $table->enum('gender', ['girl', 'boy']);
+            $table->enum('gender', ['perempuan', 'laki-laki']);
             $table->string('email')->unique();
-            $table->char('tlp');
-            $table->char('papa');
-            $table->char('mama');
+            $table->string('major');
             $table->enum('role', ['admin', 'user']);
             $table->timestamps();
         });

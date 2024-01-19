@@ -21,6 +21,6 @@ class Login
             return $next($request);
         }
 
-        return redirect('/login')->with('notAllowed', 'Silahkan login udlu');
+        return redirect('/login')->with('notAllowed', 'Silahkan login dulu');
     }
 }

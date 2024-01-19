@@ -1,15 +1,15 @@
 <?php
 
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Ppdbs;
 
 class Payment extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id',
+        'ppdbs_id',
         'pemilik',
         'rekening',
         'nominal',
@@ -19,6 +19,6 @@ class Payment extends Model
 
     public function siswa()
     {
-        return $this->belongsTo(Ppdbs::class, 'user_id');
+        return $this->belongsTo(Ppdbs::class, 'ppdbs_id');
     }
 }

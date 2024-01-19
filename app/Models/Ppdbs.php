@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Payment;
 
 class Ppdbs extends Model
 {
@@ -14,13 +15,11 @@ class Ppdbs extends Model
         'school',
         'gender',
         'email',
-        'tlp',
-        'papa',
-        'mama',
+        'major',
         'created_at',
     ];
 
-    public function pembayaran(){
+    public function payment(){
         return $this->hasOne(Payment::class);
     }
 }

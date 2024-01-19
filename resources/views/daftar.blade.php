@@ -29,11 +29,11 @@
         <h3>Jenis Kelamin</h3>
           <div class="gender-option">
             <div class="gender">
-              <input type="radio" id="check-male" name="gender" id="gender" value="girl"/>
+              <input type="radio" id="check-male" name="gender" id="gender" value="Perempuan"/>
               <label for="check-male">Perempuan</label>
             </div>
             <div class="gender">
-              <input type="radio" id="check-female" name="gender" id="gender" value="boy"/>
+              <input type="radio" id="check-female" name="gender" id="gender" value="Laki-laki"/>
               <label for="check-female">Laki-laki</label>
             </div>
           </div>
@@ -43,10 +43,13 @@
           <label>Asal Sekolah</label>
           <br>
               <select id="sekolah" onchange="tampil()" name="school">
-                @foreach($data as $sekolah)
-                <option value="{{$sekolah['nama_sekolah']}}">{{$sekolah['nama_sekolah']}}</option>
-                @endforeach
-                <option hidden>Pilih Asal Sekolah</option>
+                <option value="MTs AL ASMAAUL HUSNA">MTs AL ASMAAUL HUSNA</option>
+                <option value="MTs Ar-Rasyidy">MTs Ar-Rasyidy</option>
+                <option value="MTs AR-ROZZAAQ">MTs AR-ROZZAAQ</option>
+                <option value="MTs Assalaam">MTs Assalaam</option>
+                <option value="MTs Balighul Hikmah">MTs Balighul Hikmah</option>
+                <option value="MTs Darul Irsyad">MTs Darul Irsyad</option>
+                <option value="MTs EL ALAMIA">MTs EL ALAMIA</option>
                 <option value="lainnya">Lainnya</option>
               </select>
         </div>
@@ -63,16 +66,8 @@
 
         <div class="input-box">
           <div class="input-box">
-            <label>Nomor Telphone</label>
-            <input type="number" placeholder="Masukkan Nomor Telephone" name="tlp" required />
-          </div>
-        </div>
-
-        <div class="input-box address">
-          <label>Nomor Telephone Orangtua</label>
-          <div class="column">
-            <input type="number" placeholder="Masukkan Nomor Ayah" name="papa" required />
-            <input type="number" placeholder="Masukkan Nomor Ibu" name="mama" required />
+            <label>Jurusan</label>
+            <input type="text" placeholder="Masukkan Jurusan" name="major" required />
           </div>
         </div>
         @csrf

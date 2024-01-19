@@ -32,13 +32,14 @@ class PpdbsController extends Controller
     }
 
     public function dashboard() {
-        return view('dashboard');
+        $users = Ppdbs::all();
+        return view('dashboard', compact('users'));
     }
 
     public function proof($id)
     {
         $databukti = Payment::latest()->paginate(1);
-        $showbukti = Payment::where('user_id', $id)->first();
+        $showbukti = Payment::where('ppdbs_id', $id)->first();
         return view('proof', compact('showbukti', 'databukti'));
     }
 
@@ -106,9 +107,7 @@ class PpdbsController extends Controller
             'school' => 'required',
             'gender' => 'required',
             'email' => 'required',
-            'tlp' => 'required',
-            'papa' => 'required',
-            'mama' => 'required',
+            'major' => 'required',
 
         ]);
 
@@ -118,9 +117,7 @@ class PpdbsController extends Controller
             'school' => $request->school,
             'gender' => $request->gender,
             'email' => $request->email,
-            'tlp' => $request->tlp,
-            'papa' => $request->papa,
-            'mama' => $request->mama,
+            'major' => $request->major,
             'status' => 0,
         ]);
 
@@ -135,25 +132,54 @@ class PpdbsController extends Controller
     }
 
     public function payment() {
-        $data = Payment::all();
-        $datasiswa = Payment::where('user_id', "=", Auth::user()->id)->first();
-        return view('payment', compact('datasiswa', 'data'));
+        $datapendaftaran = Ppdbs::with('payment')->get();
+        $datasiswa = Payment::where('ppdbs_id', "=", Auth::user()->id)->first();
+        return view('payment', compact('datasiswa', 'datapendaftaran'));
     }
 
-    public function validasi($id)
+
+    public function payment_update(Request $request)
     {
-        $datasiswa = Payment::find($id);
-        $datasiswa->status = 1;
-        $datasiswa->update();
-        return redirect('payment');
+        $request->validate([
+            'pemilik' => 'required',
+            'rekening' => 'required',
+            'nominal' => 'required',
+            'bukti' => 'required|image|file|max:3000',
+        ]);
+
+        // $pendaftaran = Payment::where("email", Auth::user()->email)->value("id");
+        $bukti = time().'.'.$request->bukti->extension();
+        $request->bukti->move(public_path('images'), $bukti);
+
+
+        Payment::where("ppdbs_id", "=", Auth::user()->id)->update([
+            'ppdbs_id' => Auth::user()->id,
+            'pemilik' => $request->pemilik,
+            'rekening' => $request->rekening,
+            'nominal' => $request->nominal,
+            'bukti' => $bukti,
+            'status' => 'pending',
+        ]);
+
+        return redirect('/dashboard')->with('successUploading', 'n');
+
+
     }
 
-    public function tolak($id)
+    public function success($id)
     {
-        $datasiswa = Payment::find($id);
-        $datasiswa->status = 2;
-        $datasiswa->update();
-        return redirect('payment');
+        Payment::where("ppdbs_id", '=', $id)->update([
+            'status' => 'success'
+        ]);
+        return redirect()->back();
+    }
+
+    public function failed($id)
+    {
+        Payment::where("ppdbs_id", '=', $id)->update([
+         'status' => 'failed'
+        ]);
+        return redirect()->back();
     }
 
     public function pembayaran(Request $request)
@@ -172,12 +198,11 @@ class PpdbsController extends Controller
         // dd($request->all());
 
         Payment::create([
-            'user_id' => Auth::user()->id,
+            'ppdbs_id' => Auth::user()->id,
             'pemilik' => $request->pemilik,
             'rekening' => $request->rekening,
             'nominal' => $request->nominal,
             'bukti' => $bukti,
-            'status' => 0,
         ]);
 
         return redirect('/dashboard')->with('successUploading', 'B');

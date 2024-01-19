@@ -21,7 +21,7 @@ use App\Http\Middleware\Login;
 Route::middleware('Guest')->group(function() {
     Route::get('/', [PpdbsController::class, 'landing']);
     Route::get('/daftar', [PpdbsController::class, 'daftar']);
-    Route::get('/daftar', [ApiController::class, 'index']);
+    // Route::get('/daftar', [ApiController::class, 'index']);
     Route::get('/login',[PpdbsController::class, 'login']);
     Route::post('/login', [PpdbsController::class, 'auth'])->name('login.auth');
     Route::post('/store', [PpdbsController::class, 'store']);
@@ -32,12 +32,15 @@ Route::middleware('Login', 'CekRole:admin,user')->group(function() {
     Route::get('/dashboard',[PpdbsController::class, 'dashboard']);
     Route::post('/uploadBukti', [PpdbsController::class, 'pembayaran'])->name('uploadPembayaran');
     Route::get('/payment',[PpdbsController::class, 'payment']);
+    Route::patch('/update-pembayaran',[PpdbsController::class, 'payment_update'])->name('update');
 
 });
 
 Route::middleware('Login', 'CekRole:admin')->group(function() {
     Route::get('/proof/{id}',[PpdbsController::class, 'proof']);
     Route::get('/detail',[PpdbsController::class, 'detail']);
+    Route::patch('/success/{id}',[PpdbsController::class, 'success']);
+    Route::patch('/failed/{id}',[PpdbsController::class, 'failed']);
 
 });
 
